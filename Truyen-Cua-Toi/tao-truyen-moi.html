@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tạo Bộ Truyện Mới</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1117;--bg2:#161b27;--bg3:#1c2333;--card:#1e2436;--border:#2a3147;--border2:#3a4460;--blue:#4e8ef7;--green:#4caf7d;--text:#cdd6f4;--text2:#a6adc8;--text3:#6c7393;--white:#e8eaf0;}
+body{background:var(--bg);color:var(--text);font-family:'Be Vietnam Pro',sans-serif;font-size:14px;min-height:100vh}
+
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px}
+.header-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:16px;height:58px}
+.logo{font-size:18px;font-weight:700;color:var(--white);text-decoration:none}.logo span{color:var(--blue)}
+.back-btn{margin-left:auto;font-size:13px;color:var(--blue);text-decoration:none;padding:6px 14px;border:1px solid rgba(78,142,247,.3);border-radius:5px;transition:all .2s}
+.back-btn:hover{background:rgba(78,142,247,.1)}
+
+.container{max-width:860px;margin:0 auto;padding:28px 20px 60px}
+
+.page-title{font-size:22px;font-weight:700;color:var(--white);margin-bottom:4px}
+.page-sub{font-size:13px;color:var(--text3);margin-bottom:28px}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.section-header{padding:13px 18px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.section-title{font-size:14px;font-weight:700;color:var(--white)}
+.section-body{padding:18px}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+label{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.3px}
+input[type=text],textarea,select{
+  background:var(--bg3);border:1px solid var(--border2);border-radius:6px;
+  padding:9px 12px;color:var(--text);font-size:13px;font-family:inherit;
+  outline:none;width:100%;transition:border-color .2s;
+}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--blue)}
+input[type=text]::placeholder,textarea::placeholder{color:var(--text3)}
+textarea{resize:vertical;min-height:80px;line-height:1.6}
+select option{background:var(--bg3)}
+
+.tags-hint{font-size:11px;color:var(--text3);margin-top:3px}
+
+/* folder name preview */
+.folder-preview{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;font-size:13px;color:var(--text3)}
+.folder-preview span{color:var(--green);font-weight:600}
+
+/* generate button */
+.gen-btn{width:100%;padding:14px;border-radius:8px;background:var(--blue);color:#fff;border:none;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.gen-btn:hover{opacity:.87}
+.gen-btn:active{opacity:.7}
+
+/* output */
+.output-block{display:none;margin-top:20px}
+.output-block.show{display:block}
+.output-section{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.output-header{padding:12px 18px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.output-title{font-size:13px;font-weight:700;color:var(--white);display:flex;align-items:center;gap:8px}
+.dl-btn{padding:6px 16px;border-radius:5px;background:var(--green);color:#fff;border:none;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity .2s}
+.dl-btn:hover{opacity:.85}
+
+.steps{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-top:16px}
+.steps-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:10px}
+.step{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--text2);line-height:1.6}
+.step:last-child{margin-bottom:0}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step code{background:var(--bg);padding:1px 6px;border-radius:3px;font-size:12px;color:var(--green);font-family:monospace}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span>📚</span> Tủ Truyện Dịch</a>
+    <a href="index.html" class="back-btn">← Về trang chủ</a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="page-title">✨ Tạo bộ truyện mới</div>
+  <div class="page-sub">Điền thông tin bên dưới, rồi bấm "Tạo file" — bạn sẽ tải về file info.html và chap-1.html sẵn sàng dùng ngay.</div>
+
+  <!-- THÔNG TIN BỘ TRUYỆN -->
+  <div class="section">
+    <div class="section-header"><span>📖</span><span class="section-title">Thông tin bộ truyện</span></div>
+    <div class="section-body">
+      <div class="form-grid">
+
+        <div class="form-group full">
+          <label>Tên thư mục (không dấu, không khoảng trắng)</label>
+          <input type="text" id="folderName" placeholder="vd: re-zero, sword-art-online" oninput="updatePreview()"/>
+          <div class="folder-preview">📁 truyen-cua-toi / <span id="folderPreview">tên-thư-mục</span> / info.html</div>
+        </div>
+
+        <div class="form-group">
+          <label>Tên tiếng Việt *</label>
+          <input type="text" id="titleVi" placeholder="vd: Re:Zero — Khởi đầu ở thế giới khác"/>
+        </div>
+
+        <div class="form-group">
+          <label>Tên gốc (tiếng Nhật/Anh...)</label>
+          <input type="text" id="titleOrig" placeholder="vd: Re:ゼロから始める異世界生活"/>
+        </div>
+
+        <div class="form-group">
+          <label>Tác giả</label>
+          <input type="text" id="author" placeholder="vd: Tappei Nagatsuki"/>
+        </div>
+
+        <div class="form-group">
+          <label>Họa sĩ</label>
+          <input type="text" id="artist" placeholder="vd: Shinichirou Otsuka"/>
+        </div>
+
+        <div class="form-group">
+          <label>Nguồn gốc</label>
+          <select id="origin">
+            <option>Nhật Bản</option>
+            <option>Hàn Quốc</option>
+            <option>Trung Quốc</option>
+            <option>Khác</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Thể loại chính</label>
+          <select id="novelType">
+            <option>Light Novel</option>
+            <option>Web Novel</option>
+            <option>Manga</option>
+            <option>Manhua</option>
+            <option>Manhwa</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Trạng thái dịch</label>
+          <select id="status">
+            <option value="ongoing">🖊 Đang dịch</option>
+            <option value="done">✅ Hoàn thành</option>
+            <option value="hiatus">⏸ Tạm ngưng</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Tên người dịch (bạn)</label>
+          <input type="text" id="translator" placeholder="vd: Tên của bạn"/>
+        </div>
+
+        <div class="form-group full">
+          <label>Tag thể loại (phân cách bằng dấu phẩy)</label>
+          <input type="text" id="tags" placeholder="vd: Hành động, Fantasy, Isekai, Harem, Phiêu lưu"/>
+          <div class="tags-hint">Mỗi tag cách nhau bằng dấu phẩy</div>
+        </div>
+
+        <div class="form-group full">
+          <label>Tóm tắt nội dung</label>
+          <textarea id="synopsis" placeholder="Nhập tóm tắt câu chuyện vào đây..."></textarea>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CHƯƠNG 1 -->
+  <div class="section">
+    <div class="section-header"><span>📄</span><span class="section-title">Thông tin chương 1</span></div>
+    <div class="section-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tên chương 1 (tiếng Việt)</label>
+          <input type="text" id="chap1NameVi" placeholder="vd: Khởi đầu trong cái chết"/>
+        </div>
+        <div class="form-group">
+          <label>Tên chương 1 (tên gốc)</label>
+          <input type="text" id="chap1NameOrig" placeholder="vd: 死に戻り"/>
+        </div>
+        <div class="form-group">
+          <label>Ngày dịch</label>
+          <input type="text" id="chap1Date" placeholder="vd: 11/03/2025" value=""/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generate()">⚡ Tạo file & tải về</button>
+
+  <!-- OUTPUT -->
+  <div class="output-block" id="outputBlock">
+    <div class="output-section">
+      <div class="output-header">
+        <div class="output-title">📋 info.html <span style="font-size:11px;color:var(--text3);font-weight:400">— Trang thông tin bộ truyện</span></div>
+        <button class="dl-btn" onclick="downloadInfo()">⬇ Tải về</button>
+      </div>
+    </div>
+    <div class="output-section">
+      <div class="output-header">
+        <div class="output-title">📄 chap-1.html <span style="font-size:11px;color:var(--text3);font-weight:400">— Trang đọc chương 1</span></div>
+        <button class="dl-btn" onclick="downloadChap()">⬇ Tải về</button>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="steps-title">📌 Làm gì tiếp theo?</div>
+      <div class="step"><div class="step-num">1</div><div>Tạo thư mục mới trong <code>truyen-cua-toi/</code> đặt tên là <code id="stepFolder">tên-thư-mục</code></div></div>
+      <div class="step"><div class="step-num">2</div><div>Bỏ 2 file vừa tải (<code>info.html</code> và <code>chap-1.html</code>) vào trong thư mục đó</div></div>
+      <div class="step"><div class="step-num">3</div><div>Mở <code>index.html</code>, thêm card bộ truyện mới trỏ đến <code id="stepLink">tên-thư-mục</code>/info.html</div></div>
+      <div class="step"><div class="step-num">4</div><div>Paste nội dung dịch vào <code>chap-1.html</code> trong thẻ <code>&lt;div class="content-body"&gt;</code></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let infoHTML = '', chapHTML = '';
+const today = new Date();
+const dd = String(today.getDate()).padStart(2,'0');
+const mm = String(today.getMonth()+1).padStart(2,'0');
+const yyyy = today.getFullYear();
+document.getElementById('chap1Date').value = `${dd}/${mm}/${yyyy}`;
+
+function updatePreview(){
+  const v = document.getElementById('folderName').value || 'tên-thư-mục';
+  document.getElementById('folderPreview').textContent = v;
+}
+
+function val(id){ return document.getElementById(id).value.trim(); }
+
+function generate(){
+  const folder   = val('folderName') || 'bo-truyen-moi';
+  const titleVi  = val('titleVi') || 'Tên bộ truyện';
+  const titleOrig= val('titleOrig');
+  const author   = val('author') || '—';
+  const artist   = val('artist') || '—';
+  const origin   = val('origin');
+  const novelType= val('novelType');
+  const statusVal= document.getElementById('status').value;
+  const statusMap= {ongoing:'🖊 Đang dịch', done:'✅ Hoàn thành', hiatus:'⏸ Tạm ngưng'};
+  const statusCls= {ongoing:'status-ongoing', done:'status-done', hiatus:'status-hiatus'};
+  const translator= val('translator') || 'Người dịch';
+  const tagsRaw  = val('tags');
+  const synopsis = val('synopsis') || 'Chưa có tóm tắt.';
+  const c1Vi     = val('chap1NameVi') || 'Chương mở đầu';
+  const c1Orig   = val('chap1NameOrig');
+  const c1Date   = val('chap1Date');
+
+  const tagHtml = tagsRaw ? tagsRaw.split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('\n        ') : '';
+  const synHtml = synopsis.split('\n').map(l=>`<p>${l}</p>`).join('\n    ');
+
+  // ── INFO.HTML ──
+  infoHTML = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>${titleVi} — Tủ Truyện Dịch</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1117;--bg2:#161b27;--bg3:#1c2333;--card:#1e2436;--border:#2a3147;--border2:#3a4460;--blue:#4e8ef7;--text:#cdd6f4;--text2:#a6adc8;--text3:#6c7393;--white:#e8eaf0;}
+body{background:var(--bg);color:var(--text);font-family:'Be Vietnam Pro',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.topbar{background:#0a0d14;border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;height:40px}
+.topbar a{font-size:12px;color:var(--blue)}.topbar a:hover{text-decoration:underline}
+.topbar span{font-size:12px;color:var(--text3);margin:0 6px}
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 16px}
+.header-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:20px;height:62px}
+.logo{font-size:20px;font-weight:700;color:var(--white)}.logo span{color:var(--blue)}
+.nav-links{display:flex;gap:2px;flex:1}
+.nav-links a{padding:6px 11px;border-radius:5px;font-size:13px;color:var(--text2);font-weight:500;transition:all .2s}
+.nav-links a:hover{background:var(--bg3);color:var(--white)}
+.container{max-width:1180px;margin:0 auto;padding:20px 16px}
+.novel-hero{display:flex;gap:24px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:20px;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.cover-img{width:160px;height:228px;border-radius:7px;overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:60px;border:1px solid var(--border2);flex-shrink:0}
+.cover-img img{width:100%;height:100%;object-fit:cover}
+.cover-actions{display:flex;flex-direction:column;gap:6px;margin-top:10px;width:160px}
+.btn{padding:8px 0;border-radius:6px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;border:none;width:100%;transition:opacity .2s;display:block}
+.btn:hover{opacity:.85}.btn-primary{background:var(--blue);color:#fff}.btn-outline{background:transparent;color:var(--blue);border:1px solid var(--blue)}
+.novel-detail{flex:1;min-width:0}
+.novel-title-main{font-size:22px;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:4px}
+.novel-title-orig{font-size:13px;color:var(--text3);margin-bottom:16px;font-style:italic}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;margin-bottom:16px}
+.info-row{display:flex;gap:8px;font-size:13px}
+.info-label{color:var(--text3);flex-shrink:0;width:90px}.info-val{color:var(--text2)}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600}
+.status-ongoing{background:rgba(78,142,247,.15);color:var(--blue);border:1px solid rgba(78,142,247,.3)}
+.status-done{background:rgba(76,175,125,.15);color:#4caf7d;border:1px solid rgba(76,175,125,.3)}
+.status-hiatus{background:rgba(240,160,75,.15);color:#f0a04b;border:1px solid rgba(240,160,75,.3)}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.tag{padding:3px 10px;border-radius:4px;background:var(--bg3);border:1px solid var(--border2);font-size:11px;color:var(--text2)}
+.synopsis-block{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:16px;margin-bottom:20px}
+.synopsis-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:10px}
+.synopsis-text{font-size:13px;color:var(--text2);line-height:1.85}
+.synopsis-text p{margin-bottom:.7em}
+.chap-block{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.chap-block-header{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.chap-block-title{font-size:14px;font-weight:700;color:var(--white)}
+.chap-count{font-size:12px;color:var(--text3)}
+.chap-list{padding:4px 0}
+.chap-item{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);transition:background .2s}
+.chap-item:last-child{border-bottom:none}.chap-item:hover{background:var(--bg3)}
+.chap-left{display:flex;align-items:center;gap:12px}
+.chap-num{font-size:12px;color:var(--text3);width:60px;flex-shrink:0}
+.chap-name{font-size:13px;color:var(--white);font-weight:500}
+.chap-name-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.chap-right{display:flex;align-items:center;gap:12px}
+.chap-date{font-size:11px;color:var(--text3)}.chap-arrow{color:var(--blue);font-size:12px}
+footer{background:#0a0d14;border-top:1px solid var(--border);padding:24px 16px;margin-top:20px;text-align:center}
+.footer-text{font-size:11px;color:var(--text3)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">🏠 Trang chủ</a>
+  <span>/</span>
+  <span style="color:var(--text2)">${titleVi}</span>
+</div>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo"><span>📚</span> Tủ Truyện Dịch</a>
+    <nav class="nav-links">
+      <a href="../index.html">Trang chủ</a>
+      <a href="#">Danh sách</a>
+    </nav>
+  </div>
+</header>
+<div class="container">
+  <div class="novel-hero">
+    <div>
+      <div class="cover-img">
+        <!-- Có ảnh bìa: thay bằng <img src="bia.jpg" alt="bìa"> -->
+        📖
+      </div>
+      <div class="cover-actions">
+        <a class="btn btn-primary" href="chap-1.html">▶ Đọc từ đầu</a>
+        <a class="btn btn-outline" href="chap-1.html">↓ Mới nhất</a>
+      </div>
+    </div>
+    <div class="novel-detail">
+      <div class="novel-title-main">${titleVi}</div>
+      <div class="novel-title-orig">${titleOrig}</div>
+      <div class="info-grid">
+        <div class="info-row"><span class="info-label">Tác giả</span><span class="info-val">${author}</span></div>
+        <div class="info-row"><span class="info-label">Nguồn gốc</span><span class="info-val">${origin}</span></div>
+        <div class="info-row"><span class="info-label">Họa sĩ</span><span class="info-val">${artist}</span></div>
+        <div class="info-row"><span class="info-label">Thể loại</span><span class="info-val">${novelType}</span></div>
+        <div class="info-row"><span class="info-label">Người dịch</span><span class="info-val">${translator}</span></div>
+        <div class="info-row"><span class="info-label">Số chương</span><span class="info-val" id="chapCountDisplay">1 chương</span></div>
+        <div class="info-row"><span class="info-label">Trạng thái</span><span class="info-val"><span class="status-badge ${statusCls[statusVal]}">${statusMap[statusVal]}</span></span></div>
+      </div>
+      <div class="tags">
+        ${tagHtml}
+      </div>
+    </div>
+  </div>
+
+  <div class="synopsis-block">
+    <div class="synopsis-title">📋 Tóm tắt nội dung</div>
+    <div class="synopsis-text">${synHtml}</div>
+  </div>
+
+  <!-- ===== THÊM CHAP MỚI: SAO CHÉP .chap-item BÊN DƯỚI ===== -->
+  <div class="chap-block">
+    <div class="chap-block-header">
+      <div class="chap-block-title">📖 Danh sách chương</div>
+      <div class="chap-count">1 chương</div>
+    </div>
+    <div class="chap-list">
+
+      <a class="chap-item" href="chap-1.html">
+        <div class="chap-left">
+          <div class="chap-num">Chương 1</div>
+          <div>
+            <div class="chap-name">${c1Vi}</div>
+            ${c1Orig ? `<div class="chap-name-sub">${c1Orig}</div>` : ''}
+          </div>
+        </div>
+        <div class="chap-right">
+          <span class="chap-date">${c1Date}</span>
+          <span class="chap-arrow">›</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+<footer><div class="footer-text">Tủ Truyện Dịch · Bản dịch cá nhân · © ${yyyy}</div></footer>
+</body>
+</html>`;
+
+  // ── CHAP-1.HTML ──
+  chapHTML = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chương 1 — ${titleVi}</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1117;--bg2:#161b27;--bg3:#1c2333;--card:#1e2436;--border:#2a3147;--border2:#3a4460;--blue:#4e8ef7;--text:#cdd6f4;--text2:#a6adc8;--text3:#6c7393;--white:#e8eaf0;}
+body{background:var(--bg);color:var(--text);font-family:'Be Vietnam Pro',sans-serif;font-size:14px;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(22,27,39,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:48px}
+.topbar-left{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3)}
+.topbar-left a{color:var(--blue)}.topbar-left a:hover{text-decoration:underline}
+.topbar-left span{color:var(--text3)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.font-btn{padding:4px 10px;border-radius:4px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;font-size:12px;font-family:inherit;transition:all .2s}
+.font-btn:hover{border-color:var(--blue);color:var(--blue)}
+.font-label{font-size:11px;color:var(--text3)}
+.chap-header-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:20px 16px}
+.chap-header-inner{max-width:780px;margin:0 auto;text-align:center}
+.chap-series{font-size:12px;color:var(--blue);margin-bottom:6px;font-weight:500}
+.chap-num-label{font-size:12px;color:var(--text3);margin-bottom:6px}
+.chap-title{font-size:22px;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:4px}
+.chap-title-orig{font-size:13px;color:var(--text3);font-style:italic}
+.content-wrap{max-width:780px;margin:0 auto;padding:32px 16px 60px}
+.content-body{font-family:'Lora',serif;font-size:17px;line-height:1.95;color:#c8d0e8}
+.content-body p{margin-bottom:1.3em}
+.content-body p:first-child::first-letter{font-size:3.4em;font-weight:700;float:left;line-height:.78;margin:.08em .1em 0 0;color:var(--blue)}
+.tn-box{margin:28px 0;padding:14px 18px;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 6px 6px 0}
+.tn-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:6px;font-family:'Be Vietnam Pro',sans-serif}
+.tn-text{font-size:13px;line-height:1.75;color:var(--text2);font-family:'Be Vietnam Pro',sans-serif}
+.chapter-divider{text-align:center;color:var(--text3);margin:32px 0;font-size:13px;display:flex;align-items:center;gap:12px}
+.chapter-divider::before,.chapter-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.chap-nav{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
+.nav-btn{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:6px;border:1px solid var(--border2);background:var(--card);color:var(--text2);font-size:13px;font-weight:500;transition:all .2s;font-family:'Be Vietnam Pro',sans-serif;cursor:pointer}
+.nav-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--bg3)}
+.nav-btn.disabled{opacity:.3;pointer-events:none}
+.nav-center a{font-size:13px;color:var(--blue);background:rgba(78,142,247,.1);padding:8px 16px;border-radius:6px;border:1px solid rgba(78,142,247,.2);transition:background .2s}
+.nav-center a:hover{background:rgba(78,142,247,.2)}
+footer{background:#0a0d14;border-top:1px solid var(--border);padding:20px 16px;margin-top:20px;text-align:center}
+.footer-text{font-size:11px;color:var(--text3)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="../../index.html">🏠</a>
+    <span>›</span>
+    <a href="info.html">${titleVi}</a>
+    <span>›</span>
+    <span>Chương 1</span>
+  </div>
+  <div class="topbar-right">
+    <span class="font-label">Cỡ chữ:</span>
+    <button class="font-btn" onclick="changeFont(-1)">A−</button>
+    <button class="font-btn" onclick="changeFont(1)">A+</button>
+  </div>
+</div>
+<div class="chap-header-bar">
+  <div class="chap-header-inner">
+    <div class="chap-series">${titleVi}</div>
+    <div class="chap-num-label">Chương 1</div>
+    <div class="chap-title">${c1Vi}</div>
+    ${c1Orig ? `<div class="chap-title-orig">${c1Orig}</div>` : ''}
+  </div>
+</div>
+<div class="content-wrap">
+
+  <!-- ===== PASTE NỘI DUNG DỊCH VÀO ĐÂY — mỗi đoạn bọc trong <p>...</p> ===== -->
+  <div class="content-body" id="content">
+
+    <p>Paste nội dung chương 1 vào đây. Xóa đoạn này và thay bằng bản dịch thật.</p>
+
+    <p>Mỗi đoạn văn bọc trong thẻ &lt;p&gt; và &lt;/p&gt;.</p>
+
+    <!-- Xóa tn-box nếu không cần ghi chú -->
+    <div class="tn-box">
+      <div class="tn-label">📝 Ghi chú người dịch</div>
+      <div class="tn-text">Ghi chú dịch giả ở đây. Xóa khối này nếu không cần.</div>
+    </div>
+
+  </div>
+  <!-- ========================================================================= -->
+
+  <div class="chapter-divider">— Hết chương 1 —</div>
+
+  <div class="chap-nav">
+    <button class="nav-btn disabled">← Chương trước</button>
+    <div class="nav-center"><a href="info.html">📋 Mục lục</a></div>
+    <!-- Đổi href khi có chap 2 -->
+    <a class="nav-btn" href="chap-2.html">Chương sau →</a>
+  </div>
+</div>
+<footer><div class="footer-text">Tủ Truyện Dịch · Bản dịch cá nhân · © ${yyyy}</div></footer>
+<script>
+let fontSize=17;
+function changeFont(d){fontSize=Math.min(24,Math.max(13,fontSize+d));document.getElementById('content').style.fontSize=fontSize+'px'}
+<\/script>
+</body>
+</html>`;
+
+  // Show output
+  document.getElementById('outputBlock').classList.add('show');
+  document.getElementById('stepFolder').textContent = folder;
+  document.getElementById('stepLink').textContent = folder;
+  document.getElementById('outputBlock').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function downloadInfo(){
+  const folder = val('folderName') || 'bo-truyen-moi';
+  download('info.html', infoHTML);
+}
+function downloadChap(){
+  download('chap-1.html', chapHTML);
+}
+function download(filename, content){
+  const blob = new Blob([content], {type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+</script>
+</body>
+</html>
+`;

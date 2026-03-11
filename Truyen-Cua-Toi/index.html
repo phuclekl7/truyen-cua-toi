@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tủ Truyện Dịch</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;--bg2:#161b27;--bg3:#1c2333;--card:#1e2436;
+  --border:#2a3147;--border2:#3a4460;
+  --blue:#4e8ef7;--blue2:#6ba3ff;
+  --text:#cdd6f4;--text2:#a6adc8;--text3:#6c7393;
+  --white:#e8eaf0;
+}
+body{background:var(--bg);color:var(--text);font-family:'Be Vietnam Pro',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+.topbar{background:#0a0d14;border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:40px}
+.topbar-left{font-size:12px;color:var(--text3)}
+.topbar-right{display:flex;gap:16px;font-size:12px}
+.topbar-right a{color:var(--blue)}.topbar-right a:hover{text-decoration:underline}
+
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 16px}
+.header-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:20px;height:62px}
+.logo{font-size:20px;font-weight:700;color:var(--white);white-space:nowrap}
+.logo span{color:var(--blue)}
+.nav-links{display:flex;gap:2px;flex:1}
+.nav-links a{padding:6px 11px;border-radius:5px;font-size:13px;color:var(--text2);font-weight:500;transition:all .2s}
+.nav-links a:hover,.nav-links a.active{background:var(--bg3);color:var(--white)}
+.search-bar{display:flex;align-items:center;background:var(--bg);border:1px solid var(--border2);border-radius:6px;overflow:hidden;height:34px}
+.search-bar input{background:none;border:none;outline:none;padding:0 12px;color:var(--text);font-size:13px;width:190px;font-family:inherit}
+.search-bar input::placeholder{color:var(--text3)}
+.search-bar button{background:var(--blue);border:none;color:#fff;padding:0 12px;height:100%;cursor:pointer;font-size:13px}
+
+.container{max-width:1180px;margin:0 auto;padding:20px 16px;display:flex;gap:18px}
+.main{flex:1;min-width:0}
+.sidebar{width:255px;flex-shrink:0}
+
+.sec-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-bar{width:3px;height:18px;background:var(--blue);border-radius:2px}
+.sec-title{font-size:15px;font-weight:700;color:var(--white)}
+
+/* Update list */
+.update-list{display:flex;flex-direction:column;gap:2px;margin-bottom:24px}
+.update-item{display:flex;align-items:center;gap:12px;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:6px;transition:border-color .2s,background .2s;cursor:pointer}
+.update-item:hover{border-color:var(--border2);background:var(--bg3)}
+.update-thumb{width:36px;height:50px;border-radius:4px;overflow:hidden;flex-shrink:0;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:16px}
+.update-thumb img{width:100%;height:100%;object-fit:cover}
+.update-info{flex:1;min-width:0}
+.update-title{font-size:13px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.update-chaps{display:flex;gap:5px;flex-wrap:wrap}
+.update-chap-link{font-size:11px;color:var(--blue);background:rgba(78,142,247,.12);padding:2px 7px;border-radius:3px;transition:background .2s}
+.update-chap-link:hover{background:rgba(78,142,247,.25)}
+.update-time{font-size:11px;color:var(--text3);flex-shrink:0;white-space:nowrap}
+
+/* Novel grid */
+.novel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:12px;margin-bottom:24px}
+.novel-card{background:var(--card);border:1px solid var(--border);border-radius:7px;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;animation:fadeUp .4s ease both;display:block}
+.novel-card:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.novel-thumb{position:relative;aspect-ratio:2/3;background:var(--bg3);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:44px}
+.novel-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s;position:absolute;inset:0}
+.novel-card:hover .novel-thumb img{transform:scale(1.05)}
+.badge{position:absolute;top:6px;left:0;font-size:9px;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;font-weight:700;border-radius:0 3px 3px 0}
+.badge-hot{background:#e05c5c;color:#fff}
+.badge-new{background:#4caf7d;color:#fff}
+.badge-done{background:#6c7393;color:#fff}
+.novel-body{padding:9px}
+.novel-title{font-size:12px;font-weight:600;color:var(--white);line-height:1.35;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:32px}
+.novel-meta{font-size:11px;color:var(--text3);display:flex;justify-content:space-between;align-items:center}
+.novel-chap{color:var(--blue);font-weight:500}
+
+/* Sidebar */
+.sidebar-block{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.sb-header{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--bg3)}
+.sb-title{font-size:13px;font-weight:700;color:var(--white)}
+.sb-list{padding:4px 0}
+.sb-item{display:flex;align-items:center;gap:10px;padding:7px 12px;transition:background .2s}
+.sb-item:hover{background:var(--bg3)}
+.rank{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.r1{background:#f0a04b;color:#000}.r2{background:#8899aa;color:#fff}.r3{background:#c87533;color:#fff}.rn{background:var(--bg3);color:var(--text3)}
+.sb-thumb{width:30px;height:42px;border-radius:3px;overflow:hidden;flex-shrink:0;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:14px}
+.sb-thumb img{width:100%;height:100%;object-fit:cover}
+.sb-info{flex:1;min-width:0}
+.sb-item-title{font-size:12px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-item-sub{font-size:10px;color:var(--text3)}
+
+.genre-wrap{display:flex;flex-wrap:wrap;gap:5px;padding:10px 12px}
+.genre-tag{padding:3px 9px;border-radius:4px;background:var(--bg3);border:1px solid var(--border2);font-size:11px;color:var(--text2);transition:all .2s}
+.genre-tag:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+.about-block{padding:12px 14px;font-size:12px;color:var(--text2);line-height:1.8}
+.about-block strong{color:var(--white)}
+
+footer{background:#0a0d14;border-top:1px solid var(--border);padding:24px 16px;margin-top:20px;text-align:center}
+.footer-logo{font-size:17px;font-weight:700;color:var(--white);margin-bottom:6px}
+.footer-logo span{color:var(--blue)}
+.footer-text{font-size:11px;color:var(--text3);line-height:1.9}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">Xin chào! Đây là kho bản dịch cá nhân.</div>
+  <div class="topbar-right"><a href="#">Giới thiệu</a></div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span>📚</span> Tủ Truyện Dịch</a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Trang chủ</a>
+      <a href="#">Danh sách</a>
+      <a href="#">Mới cập nhật</a>
+    </nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm kiếm truyện..."/>
+      <button>🔍</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+<div class="main">
+
+  <!-- MỚI CẬP NHẬT -->
+  <div class="sec-header">
+    <div class="sec-bar"></div>
+    <div class="sec-title">🔥 Mới cập nhật</div>
+  </div>
+
+  <!-- ===== SỬA / THÊM TRUYỆN Ở ĐÂY ===== -->
+  <div class="update-list">
+
+    <a class="update-item" href="bo-truyen-1/info.html">
+      <div class="update-thumb">📖</div>
+      <div class="update-info">
+        <div class="update-title">Tên Bộ Truyện 1</div>
+        <div class="update-chaps">
+          <a class="update-chap-link" href="bo-truyen-1/chap-2.html" onclick="event.stopPropagation()">Chương 2</a>
+          <a class="update-chap-link" href="bo-truyen-1/chap-1.html" onclick="event.stopPropagation()">Chương 1</a>
+        </div>
+      </div>
+      <div class="update-time">Hôm nay</div>
+    </a>
+
+    <a class="update-item" href="bo-truyen-2/info.html">
+      <div class="update-thumb">📗</div>
+      <div class="update-info">
+        <div class="update-title">Tên Bộ Truyện 2</div>
+        <div class="update-chaps">
+          <a class="update-chap-link" href="bo-truyen-2/chap-5.html" onclick="event.stopPropagation()">Chương 5</a>
+          <a class="update-chap-link" href="bo-truyen-2/chap-4.html" onclick="event.stopPropagation()">Chương 4</a>
+        </div>
+      </div>
+      <div class="update-time">Hôm qua</div>
+    </a>
+
+  </div>
+  <!-- ====================================== -->
+
+  <!-- TẤT CẢ BỘ TRUYỆN -->
+  <div class="sec-header">
+    <div class="sec-bar"></div>
+    <div class="sec-title">📚 Tất cả bộ truyện</div>
+  </div>
+
+  <!-- ===== GRID TRUYỆN — SỬA / THÊM Ở ĐÂY ===== -->
+  <div class="novel-grid">
+
+    <a class="novel-card" href="bo-truyen-1/info.html" style="animation-delay:.05s">
+      <div class="novel-thumb">本<div class="badge badge-hot">HOT</div></div>
+      <div class="novel-body">
+        <div class="novel-title">Tên Bộ Truyện 1</div>
+        <div class="novel-meta"><span class="novel-chap">12 chap</span><span>2025</span></div>
+      </div>
+    </a>
+
+    <a class="novel-card" href="bo-truyen-2/info.html" style="animation-delay:.1s">
+      <div class="novel-thumb">語<div class="badge badge-new">MỚI</div></div>
+      <div class="novel-body">
+        <div class="novel-title">Tên Bộ Truyện 2</div>
+        <div class="novel-meta"><span class="novel-chap">5 chap</span><span>2025</span></div>
+      </div>
+    </a>
+
+    <a class="novel-card" href="bo-truyen-3/info.html" style="animation-delay:.15s">
+      <div class="novel-thumb">物<div class="badge badge-done">XONG</div></div>
+      <div class="novel-body">
+        <div class="novel-title">Tên Bộ Truyện 3</div>
+        <div class="novel-meta"><span class="novel-chap">45 chap</span><span>2024</span></div>
+      </div>
+    </a>
+
+  </div>
+  <!-- ============================================= -->
+
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <div class="sidebar-block">
+    <div class="sb-header"><span>🏆</span><span class="sb-title">Top truyện</span></div>
+    <div class="sb-list">
+
+      <!-- SỬA / THÊM Ở ĐÂY -->
+      <a class="sb-item" href="bo-truyen-1/info.html">
+        <div class="rank r1">1</div>
+        <div class="sb-thumb">本</div>
+        <div class="sb-info">
+          <div class="sb-item-title">Tên Bộ Truyện 1</div>
+          <div class="sb-item-sub">12 chương</div>
+        </div>
+      </a>
+      <a class="sb-item" href="bo-truyen-2/info.html">
+        <div class="rank r2">2</div>
+        <div class="sb-thumb">語</div>
+        <div class="sb-info">
+          <div class="sb-item-title">Tên Bộ Truyện 2</div>
+          <div class="sb-item-sub">5 chương</div>
+        </div>
+      </a>
+      <a class="sb-item" href="bo-truyen-3/info.html">
+        <div class="rank r3">3</div>
+        <div class="sb-thumb">物</div>
+        <div class="sb-info">
+          <div class="sb-item-title">Tên Bộ Truyện 3</div>
+          <div class="sb-item-sub">45 chương</div>
+        </div>
+      </a>
+      <!-- ============= -->
+
+    </div>
+  </div>
+
+  <div class="sidebar-block">
+    <div class="sb-header"><span>🏷️</span><span class="sb-title">Thể loại</span></div>
+    <div class="genre-wrap">
+      <a class="genre-tag" href="#">Hành động</a>
+      <a class="genre-tag" href="#">Fantasy</a>
+      <a class="genre-tag" href="#">Isekai</a>
+      <a class="genre-tag" href="#">Romance</a>
+      <a class="genre-tag" href="#">Phiêu lưu</a>
+      <a class="genre-tag" href="#">Harem</a>
+      <a class="genre-tag" href="#">Hài hước</a>
+      <a class="genre-tag" href="#">Kinh dị</a>
+      <a class="genre-tag" href="#">Slice of life</a>
+    </div>
+  </div>
+
+  <div class="sidebar-block">
+    <div class="sb-header"><span>ℹ️</span><span class="sb-title">Về trang này</span></div>
+    <div class="about-block">
+      Bản dịch cá nhân của <strong>tên bạn</strong>. Tất cả do mình tự dịch, không vì mục đích thương mại.
+    </div>
+  </div>
+
+</aside>
+</div>
+
+<footer>
+  <div class="footer-logo"><span>📚</span> Tủ Truyện Dịch</div>
+  <div class="footer-text">Bản dịch cá nhân · Không vì mục đích thương mại<br>© 2025 · Tên của bạn</div>
+</footer>
+
+</body>
+</html>
