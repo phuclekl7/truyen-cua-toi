@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tên Bộ Truyện 1 — Tủ Truyện Dịch</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1117;--bg2:#161b27;--bg3:#1c2333;--card:#1e2436;--border:#2a3147;--border2:#3a4460;--blue:#4e8ef7;--text:#cdd6f4;--text2:#a6adc8;--text3:#6c7393;--white:#e8eaf0;}
+body{background:var(--bg);color:var(--text);font-family:'Be Vietnam Pro',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+.topbar{background:#0a0d14;border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;height:40px}
+.topbar a{font-size:12px;color:var(--blue)}.topbar a:hover{text-decoration:underline}
+.topbar span{font-size:12px;color:var(--text3);margin:0 6px}
+
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 16px}
+.header-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:20px;height:62px}
+.logo{font-size:20px;font-weight:700;color:var(--white)}.logo span{color:var(--blue)}
+.nav-links{display:flex;gap:2px;flex:1}
+.nav-links a{padding:6px 11px;border-radius:5px;font-size:13px;color:var(--text2);font-weight:500;transition:all .2s}
+.nav-links a:hover{background:var(--bg3);color:var(--white)}
+.search-bar{display:flex;align-items:center;background:var(--bg);border:1px solid var(--border2);border-radius:6px;overflow:hidden;height:34px}
+.search-bar input{background:none;border:none;outline:none;padding:0 12px;color:var(--text);font-size:13px;width:190px;font-family:inherit}
+.search-bar input::placeholder{color:var(--text3)}
+.search-bar button{background:var(--blue);border:none;color:#fff;padding:0 12px;height:100%;cursor:pointer;font-size:13px}
+
+.container{max-width:1180px;margin:0 auto;padding:20px 16px}
+
+/* NOVEL HERO */
+.novel-hero{display:flex;gap:24px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:20px;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.novel-cover{width:160px;flex-shrink:0}
+.cover-img{width:160px;height:228px;border-radius:7px;overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:60px;border:1px solid var(--border2)}
+.cover-img img{width:100%;height:100%;object-fit:cover}
+.cover-actions{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.btn{padding:8px 0;border-radius:6px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;border:none;width:100%;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-outline{background:transparent;color:var(--blue);border:1px solid var(--blue)}
+
+.novel-detail{flex:1;min-width:0}
+.novel-title-main{font-size:22px;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:4px}
+.novel-title-orig{font-size:13px;color:var(--text3);margin-bottom:16px;font-style:italic}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;margin-bottom:16px}
+.info-row{display:flex;gap:8px;font-size:13px}
+.info-label{color:var(--text3);flex-shrink:0;width:90px}
+.info-val{color:var(--text2)}
+.info-val a{color:var(--blue)}.info-val a:hover{text-decoration:underline}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:.5px}
+.status-ongoing{background:rgba(78,142,247,.15);color:var(--blue);border:1px solid rgba(78,142,247,.3)}
+.status-done{background:rgba(76,175,125,.15);color:#4caf7d;border:1px solid rgba(76,175,125,.3)}
+
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.tag{padding:3px 10px;border-radius:4px;background:var(--bg3);border:1px solid var(--border2);font-size:11px;color:var(--text2)}
+
+.synopsis-block{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:16px;margin-bottom:20px}
+.synopsis-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.synopsis-text{font-size:13px;color:var(--text2);line-height:1.85}
+
+/* CHAPTER LIST */
+.chap-block{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.chap-block-header{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.chap-block-title{font-size:14px;font-weight:700;color:var(--white);display:flex;align-items:center;gap:8px}
+.chap-count{font-size:12px;color:var(--text3)}
+.chap-list{padding:4px 0}
+.chap-item{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);transition:background .2s;animation:fadeUp .3s ease both}
+.chap-item:last-child{border-bottom:none}
+.chap-item:hover{background:var(--bg3)}
+.chap-left{display:flex;align-items:center;gap:12px}
+.chap-num{font-size:12px;color:var(--text3);width:60px;flex-shrink:0}
+.chap-name{font-size:13px;color:var(--white);font-weight:500}
+.chap-name-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.chap-right{display:flex;align-items:center;gap:12px}
+.chap-date{font-size:11px;color:var(--text3)}
+.chap-arrow{color:var(--blue);font-size:12px}
+
+footer{background:#0a0d14;border-top:1px solid var(--border);padding:24px 16px;margin-top:20px;text-align:center}
+.footer-logo{font-size:17px;font-weight:700;color:var(--white);margin-bottom:6px}.footer-logo span{color:var(--blue)}
+.footer-text{font-size:11px;color:var(--text3)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="../index.html">🏠 Trang chủ</a>
+  <span>/</span>
+  <span style="color:var(--text2)">Tên Bộ Truyện 1</span>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo"><span>📚</span> Tủ Truyện Dịch</a>
+    <nav class="nav-links">
+      <a href="../index.html">Trang chủ</a>
+      <a href="#">Danh sách</a>
+      <a href="#">Mới cập nhật</a>
+    </nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm kiếm truyện..."/>
+      <button>🔍</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ===== THÔNG TIN BỘ TRUYỆN — SỬA Ở ĐÂY ===== -->
+  <div class="novel-hero">
+    <div class="novel-cover">
+      <div class="cover-img">
+        <!-- Có ảnh bìa: <img src="bia.jpg" alt="bìa"> -->
+        本
+      </div>
+      <div class="cover-actions">
+        <a class="btn btn-primary" href="chap-1.html">▶ Đọc từ đầu</a>
+        <a class="btn btn-outline" href="chap-2.html">↓ Đọc mới nhất</a>
+      </div>
+    </div>
+    <div class="novel-detail">
+      <div class="novel-title-main">Tên Bộ Truyện 1</div>
+      <div class="novel-title-orig">Tên gốc tiếng Nhật / Anh...</div>
+
+      <div class="info-grid">
+        <div class="info-row"><span class="info-label">Tác giả</span><span class="info-val">Tên tác giả</span></div>
+        <div class="info-row"><span class="info-label">Nguồn gốc</span><span class="info-val">Nhật Bản</span></div>
+        <div class="info-row"><span class="info-label">Họa sĩ</span><span class="info-val">Tên họa sĩ</span></div>
+        <div class="info-row"><span class="info-label">Thể loại</span><span class="info-val">Light Novel</span></div>
+        <div class="info-row"><span class="info-label">Người dịch</span><span class="info-val">Tên của bạn</span></div>
+        <div class="info-row"><span class="info-label">Số chương</span><span class="info-val">2 / ? chương</span></div>
+        <div class="info-row"><span class="info-label">Trạng thái</span><span class="info-val"><span class="status-badge status-ongoing">🖊 Đang dịch</span></span></div>
+      </div>
+
+      <div class="tags">
+        <span class="tag">Hành động</span>
+        <span class="tag">Fantasy</span>
+        <span class="tag">Isekai</span>
+        <span class="tag">Harem</span>
+        <span class="tag">Phiêu lưu</span>
+      </div>
+    </div>
+  </div>
+  <!-- ================================================ -->
+
+  <div class="synopsis-block">
+    <div class="synopsis-title">📋 Tóm tắt nội dung</div>
+    <!-- ===== SỬA TÓM TẮT Ở ĐÂY ===== -->
+    <div class="synopsis-text">
+      Đây là phần tóm tắt nội dung bộ truyện. Hãy xóa đoạn này và điền tóm tắt thật của bộ truyện vào. 
+      Bạn có thể viết dài bao nhiêu tùy thích để mô tả cốt truyện, nhân vật chính, bối cảnh thế giới...
+    </div>
+    <!-- ================================= -->
+  </div>
+
+  <!-- ===== DANH SÁCH CHƯƠNG — THÊM CHAP Ở ĐÂY ===== -->
+  <div class="chap-block">
+    <div class="chap-block-header">
+      <div class="chap-block-title">📖 Danh sách chương</div>
+      <div class="chap-count">2 chương</div>
+    </div>
+    <div class="chap-list">
+
+      <!-- SAO CHÉP KHỐI NÀY KHI THÊM CHAP MỚI -->
+      <a class="chap-item" href="chap-1.html" style="animation-delay:.05s">
+        <div class="chap-left">
+          <div class="chap-num">Chương 1</div>
+          <div>
+            <div class="chap-name">Tên chương tiếng Việt</div>
+            <div class="chap-name-sub">Tên chương gốc</div>
+          </div>
+        </div>
+        <div class="chap-right">
+          <span class="chap-date">01/01/2025</span>
+          <span class="chap-arrow">›</span>
+        </div>
+      </a>
+
+      <a class="chap-item" href="chap-2.html" style="animation-delay:.1s">
+        <div class="chap-left">
+          <div class="chap-num">Chương 2</div>
+          <div>
+            <div class="chap-name">Tên chương tiếng Việt</div>
+            <div class="chap-name-sub">Tên chương gốc</div>
+          </div>
+        </div>
+        <div class="chap-right">
+          <span class="chap-date">05/01/2025</span>
+          <span class="chap-arrow">›</span>
+        </div>
+      </a>
+      <!-- =========================================== -->
+
+    </div>
+  </div>
+  <!-- ================================================= -->
+
+</div>
+
+<footer>
+  <div class="footer-logo"><span>📚</span> Tủ Truyện Dịch</div>
+  <div class="footer-text">Bản dịch cá nhân · Không vì mục đích thương mại · © 2025</div>
+</footer>
+
+</body>
+</html>
